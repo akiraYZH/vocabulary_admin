@@ -6,6 +6,7 @@ export const constantRoutes: Array<RouteConfig> = [
     {
         path: "/login",
         name: "Login",
+        meta: { title: "Login" },
         component: () =>
             import("../views/Login.vue")
     }
@@ -17,51 +18,51 @@ export const asyncRoutes: Array<RouteConfig> = [
         path: "/",
         name: "Layout",
         component: Layout,
-        meta:{title:"Layout"},
+        meta: { title: "Layout" },
+        redirect: "/dashboard",
         children: [
             {
-                path: "/test",
-                name: "Test",
-                meta:{title:"Test"},
-                component: Layout
+                path: "/dashboard",
+                name: "Dashboard",
+                meta: { title: "Dashboard", icon: "el-icon-house" },
+                component: () =>
+                    import(/* webpackChunkName: "about" */ "../views/Dashboard/index.vue")
+
             },
             {
-                path: "/about",
-                name: "About",
-                meta:{title:"About"},
+                path: "/vocabulary",
+                name: "Vocabulary",
+                meta: { title: "Vocabulary", icon: "el-icon-folder" },
+                component: () => import("../views/Vocabulary/index.vue"),
+                children: [{
+                    path: "/vocabulary/words",
+                    name: "Words",
+                    meta: { title: "Words", },
+                    component: () => import(/* webpackChunkName: "words" */ "../views/Vocabulary/Words/index.vue")
+                }, {
+                    path: "/vocabulary/books",
+                    name: "Books",
+                    meta: { title: "Books", },
+                    component: () => import(/* webpackChunkName: "books" */ "../views/Vocabulary/Books/index.vue")
+                }]
+            },
+            {
+                path: "/admins",
+                name: "Admins",
+                meta: { title: "Administrators", icon: "el-icon-house" },
                 component: () =>
-                    import(/* webpackChunkName: "about" */ "../views/About.vue"),
-                children: [
-                    {
-                        path: "/about/home",
-                        name: "Test",
-                        meta:{title:"Home"},
-                        component: Layout
-                    },
-                    {
-                        path: "/about/home2",
-                        name: "About2",
-                        meta:{title:"About2"},
-                        component: () =>
-                            import(/* webpackChunkName: "about" */ "../views/About.vue"),
-                        children: [
-                            {
-                                path: "/test/test1",
-                                name: "Test",
-                                meta:{title:"Test2"},
-                                component: Layout
-                            },
-                            {
-                                path: "/about/test2",
-                                name: "About",
-                                meta:{title:"Test3"},
-                                component: () =>
-                                    import(/* webpackChunkName: "about" */ "../views/About.vue")
-                            }
-                        ]
-                    }
-                ]
-            }
+                    import(/* webpackChunkName: "about" */ "../views/Admins/index.vue")
+
+            },
+            {
+                path: "/roles",
+                name: "Roles",
+                meta: { title: "Roles", icon: "el-icon-house" },
+                component: () =>
+                    import(/* webpackChunkName: "about" */ "../views/Roles/index.vue")
+
+            },
+
         ]
     },
 
@@ -73,7 +74,7 @@ export const asyncRoutes: Array<RouteConfig> = [
 export const doFilter = (target: RouteConfig[], filter: string[]) => {
     return target.filter(route => {
         const matched = filter.some(name => route.name == name);
-        if(route.children){
+        if (route.children) {
             route.children = doFilter(route.children, filter)
         }
         return matched

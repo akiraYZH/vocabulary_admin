@@ -12,10 +12,6 @@ export default class App extends Vue {
   async created() {
     // let result: object={};
     if (localStorage.getItem("authentication")) {
-      // result = await this.$axios
-      // .post("/api/admins/login-token")
-      // .then((result: { data:{}|[] }) => result.data);
-      console.log(mapActions);
 
       this.$store.dispatch("admin/loginToken");
       

@@ -7,7 +7,7 @@ type state = {
   adminInfo: object,
   routesForSidebar: []
 }
-const state:state = {
+const state: state = {
   //管理者信息
   adminInfo: {},
   routesForSidebar: []
@@ -15,13 +15,6 @@ const state:state = {
 };
 
 const getters = {
-  // getAdminInfo: (state:state) => {
-  //   return state.adminInfo;
-  // },
-
-  // getRoutes: (state:state) => {
-  //   return state.routes;
-  // }
 };
 
 const mutations = {
@@ -40,14 +33,13 @@ const actions = {
     return axios
       .post("/api/admins/login-token")
       .then((result: { data: { code: number, data: { role: { router: [] } }, msg: string } }) => {
-        console.log(result);
         if (result.data.code == 1) {
           context.commit("SET_ADMIN", result.data.data);
           const newRoutes = doFilter(asyncRoutes, result.data.data.role.router);
           router.addRoutes(newRoutes);
           const _router: any = router;
           const routes = newRoutes.concat(_router.options.routes);
-          const routesForSideBar = routes.filter(route=>route.name=="Layout")[0].children;
+          const routesForSideBar = routes.filter(route => route.name == "Layout")[0].children;
 
           context.commit("SET_ROUTER", routesForSideBar);
         } else if (result.data.code == -1) {
@@ -60,6 +52,16 @@ const actions = {
 
 
       });
+  },
+  logout(context: { commit: Function }, payload: any) {
+    context.commit("SET_ADMIN", null);
+    context.commit("SET_ROUTER", null);
+    localStorage.clear();
+    const url =
+      window.location.protocol + "//" + window.location.host + "/login";
+    window.localStorage.clear();
+    self.location.href = url;
+    return;
   },
 };
 

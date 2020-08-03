@@ -30,7 +30,11 @@
               trigger: 'blur',
             }"
           >
-            <el-input v-model="loginForm.password"></el-input>
+            <el-input
+              v-model="loginForm.password"
+              type="password"
+              :show-password="true"
+            ></el-input>
           </el-form-item>
           <el-button type="primary" @click="login()">Login</el-button>
         </el-form>
@@ -55,20 +59,25 @@ export default class Login extends Vue {
   }
 
   public async login() {
-    const result: any = await this.$axios
+    const result: {
+      code: number;
+      msg: string;
+      data: [] | object;
+    } = await this.$axios
       .post("/api/admins/login", this.loginForm)
       .then((result: { data: {} | [] }) => result.data);
     // console.log(result);
 
-    if (result.code == 1) {
-      this.$store.commit("admin/SET_ADMIN", result.data);
-      const newRoutes = doFilter(asyncRoutes, result.data.role.router);
-      this.$router.addRoutes(newRoutes);
-      const _router: any = this.$router;
-      const routes = newRoutes.concat(_router.options.routes);
-      this.$store.commit("admin/SET_ROUTER", routes);
-      this.$router.push("/");
-      
+    if (result) {
+      if (result.code == 1) {
+        this.$store.dispatch("admin/loginToken");
+        this.$message.success(result.msg);
+        this.$router.push("/");
+      } else {
+        this.$message.error(result.msg);
+      }
+    } else {
+      this.$message.error("登陆失败");
     }
   }
 }
