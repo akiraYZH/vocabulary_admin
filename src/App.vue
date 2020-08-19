@@ -12,11 +12,9 @@ export default class App extends Vue {
   async created() {
     // let result: object={};
     if (localStorage.getItem("authentication")) {
-
       this.$store.dispatch("admin/loginToken");
-      
     }
-    
+
     // console.log(result);
   }
 }
@@ -28,12 +26,10 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  
-
 }
 
 // reset
-*{
+* {
   // reset
   margin: 0;
   padding: 0;

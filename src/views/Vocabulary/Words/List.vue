@@ -47,6 +47,11 @@
             <div>
               f:{{ scope.row.spelling_f ? scope.row.spelling_f : "None" }}
             </div>
+            <div>
+              difficulty:{{
+                scope.row.difficulty ? scope.row.difficulty : "None"
+              }}
+            </div>
           </template>
         </el-table-column>
 
@@ -66,7 +71,23 @@
             </el-collapse>
           </template>
         </el-table-column>
-        <el-table-column prop="difficulty" label="Difficulty" width="80">
+        <el-table-column label="Img" width="200">
+          <!-- 上传图片 -->
+          <template slot-scope="scope">
+            <uploadImg
+              :urlTemp="scope.row.image"
+              :size="500"
+              @uploaded="
+                uploaded({
+                  id: scope.row.id,
+                  oldImg: scope.row.image,
+                  newImg: $event.path,
+                })
+              "
+              @uploadFail="uploadFail($event)"
+            ></uploadImg>
+            <!-- 上传图片 -->
+          </template>
         </el-table-column>
         <el-table-column label="Controls">
           <template slot-scope="scope">
@@ -111,9 +132,14 @@
 </template>
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
+import uploadImg from "@/components/uploadImg.vue";
 // import Update from "./Update.vue";
 
-@Component
+@Component({
+  components: {
+    uploadImg: uploadImg,
+  },
+})
 export default class WordList extends Vue {
   @Prop() private needRefresh: boolean | undefined;
   wordList: [];
@@ -146,10 +172,9 @@ export default class WordList extends Vue {
   get _needRefresh() {
     return this.needRefresh == undefined ? false : this.needRefresh;
   }
-  @Watch("needRefresh")
+  @Watch("_needRefresh")
   refresh(newVal: boolean, oldVal: boolean) {
-    // console.log(newVal, oldVal);
-    if (oldVal == true && newVal == false) {
+    if (oldVal == false && newVal == true) {
       this.getList();
     }
   }
@@ -204,6 +229,36 @@ export default class WordList extends Vue {
   async created() {
     this.getList();
   }
+
+  async uploaded(args: any) {
+    console.log(args);
+
+    const reuslt = await this.$axios
+      .post("/api/words/img", args)
+      .then((data: { data: { code: number; msg: string } }) => {
+        this.$message.success(data.data.msg);
+      });
+  }
+  uploadFail(res: any) {
+    this.$message.error(res.msg);
+  }
+  // handleRemove(file, fileList) {
+  //   console.log(file, fileList);
+  // }
+
+  // handlePreview(file) {
+  //   console.log(file);
+  // }
+  // handleExceed(files, fileList) {
+  //   this.$message.warning(
+  //     `当前限制选择 3 个文件，本次选择了 ${
+  //       files.length
+  //     } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+  //   );
+  // }
+  // beforeRemove(file, fileList) {
+  //   return this.$confirm(`确定移除 ${file.name}？`);
+  // }
 }
 </script>
 

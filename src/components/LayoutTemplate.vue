@@ -53,7 +53,7 @@
                     <LayoutTemplate
                       :routesForSidebar="route.children"
                       :isRecursive="true"
-                      @closeDrawer="drawer = false"
+                      @close-drawer="drawer = false"
                     />
                   </el-submenu>
                   <el-menu-item
@@ -113,8 +113,10 @@
           </el-aside>
           <!-- 侧边栏 -->
           <el-container>
-            <el-main><slot name="mainContent"></slot></el-main>
-            <el-footer>Footer</el-footer>
+            <!-- main content -->
+            <el-main class="main"><slot name="mainContent"></slot></el-main>
+            <!-- main content -->
+            <el-footer><slot name="mainFooter"></slot></el-footer>
           </el-container>
         </el-container>
       </el-container>
@@ -143,21 +145,26 @@
             <i :class="route.meta.icon"></i>
             <span slot="title">{{ route.meta.title }}</span>
           </template>
+
           <LayoutTemplate
             :routesForSidebar="route.children"
             :isRecursive="true"
-            @closeDrawer="drawer = false"
+            @close-drawer="drawer = false"
           />
         </el-submenu>
-        <el-menu-item
-          :index="route.path"
-          v-else
-          :style="route.path == $route.path ? `color:` + sideActive : sideText"
-          @click="$emit('closeDrawer')"
-        >
-          <i :class="route.meta.icon"></i>
-          <span slot="title">{{ route.meta.title }}</span>
-        </el-menu-item>
+
+        <div v-else>
+          <el-menu-item
+            :index="route.path"
+            :style="
+              route.path == $route.path ? `color:` + sideActive : sideText
+            "
+            @click="$emit('close-drawer')"
+          >
+            <i :class="route.meta.icon"></i>
+            <span slot="title">{{ route.meta.title }}</span>
+          </el-menu-item>
+        </div>
       </div>
     </div>
     <!-- content for recursive -->
@@ -166,15 +173,11 @@
 
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
-import _LayoutTemplate from "@/components/LayoutTemplate.vue";
-// import { Component } from "vue";
 
-@Component({
-  components: {
-    LayoutTempate: _LayoutTemplate,
-  },
-})
+//register component name for recursive component
+@Component({ name: "LayoutTemplate" })
 export default class LayoutTemplate extends Vue {
+  // props to receive
   @Prop() private routesForSidebar!: Array<{
     path: string;
     meta?: { title: string; icon: string };
@@ -191,7 +194,8 @@ export default class LayoutTemplate extends Vue {
   @Prop() private dialogVisible: boolean | undefined;
   @Prop() private dialogContent: Vue | undefined;
   @Prop() private dialogProp: { [propName: string]: string } | undefined;
-  // routes:[];
+
+  // properties in the component
   drawer: boolean;
   sideDefaultActive: string | undefined;
   timer: boolean;
@@ -271,7 +275,7 @@ export default class LayoutTemplate extends Vue {
   setDialogWidth() {
     const size = this.getViewportSize();
     if (size.width > 1024) {
-      this.dialogWidth = "40%";
+      this.dialogWidth = "50%";
     } else if (size.width > 768) {
       this.dialogWidth = "60%";
     } else if (size.width > 500) {
@@ -295,6 +299,8 @@ export default class LayoutTemplate extends Vue {
     }
   }
   mounted() {
+    // initialize dialog width
+    this.setDialogWidth();
     window.onresize = () => {
       if (!this.timer) {
         this.timer = true;
@@ -318,6 +324,9 @@ export default class LayoutTemplate extends Vue {
 
 .layout {
   min-height: 100vh;
+  .main {
+    padding: 0;
+  }
   .header {
     box-shadow: 0 2px 4px grey;
     display: flex;
@@ -350,7 +359,6 @@ export default class LayoutTemplate extends Vue {
   }
 
   .menu {
-    // width:100%;
     border: 0;
   }
 }

@@ -13,8 +13,7 @@
       :name="item.name"
       :closable="true"
     >
-      <WordPanel
-        mode="update"
+      <WordsDistribution
         :updateForm="item.prop"
         @needRefresh="needRefresh = true"
       />
@@ -24,7 +23,8 @@
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
 import List from "./List.vue";
-import WordPanel from "@/views/Vocabulary/Words/WordPanel.vue";
+// import WordPanel from "@/views/Vocabulary/Words/WordPanel.vue";
+import WordsDistribution from "@/views/Vocabulary/Books/WordsDistribution.vue";
 interface Input {
   id: number | undefined;
   title: string;
@@ -33,7 +33,7 @@ interface Input {
 @Component({
   components: {
     List: List,
-    WordPanel: WordPanel,
+    WordsDistribution: WordsDistribution,
   },
 })
 export default class Words extends Vue {
@@ -49,11 +49,20 @@ export default class Words extends Vue {
   }
 
   addTab(prop: Input) {
-    this.editableTabs.push({
-      title: "修改" + prop.title,
-      name: prop.title,
-      prop: prop,
-    });
+    let isMatched = false;
+    for (let i = 0; i < this.editableTabs.length; i++) {
+      if (this.editableTabs[i].name == prop.title) {
+        //已存在
+        isMatched = true;
+      }
+    }
+    if (!isMatched) {
+      this.editableTabs.push({
+        title: "修改" + prop.title,
+        name: prop.title,
+        prop: prop,
+      });
+    }
     this.activeName = prop.title;
   }
 

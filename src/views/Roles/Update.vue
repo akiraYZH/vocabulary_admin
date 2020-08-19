@@ -50,27 +50,8 @@ export default class RoleUpdate extends Vue {
   permissionList: Array<{ name: string; selected: boolean }>;
   constructor() {
     super();
-    // this.rules = {
-    //   account: [{ validator: this.checkAccount, trigger: ["blur", "change"] }],
-    //   password: [
-    //     { validator: this.checkPassword, trigger: ["blur", "change"] },
-    //   ],
-    //   email: [
-    //     { required: true, message: "请输入邮箱地址", trigger: "blur" },
-    //     {
-    //       type: "email",
-    //       message: "请输入正确的邮箱地址",
-    //       trigger: ["blur", "change"],
-    //     },
-    //     { validator: this.checkEmail, trigger: ["blur", "change"] },
-    //   ],
-    // };
     const routesTotal = asyncRoutes;
     this.permissionList = this.createPermissionList(routesTotal);
-    // this.updateFormObj = {
-    //   name: "",
-    //   permissions: this.permissions,
-    // };
     if (this.updateForm !== undefined) {
       this.updateFormObj = {
         id: this.updateForm.id,
@@ -131,7 +112,7 @@ export default class RoleUpdate extends Vue {
   refresh(newVal: [], oldVal: []) {
     this.updateFormObj.permissions = newVal;
   }
-  // }
+
   async submit() {
     (this.$refs["addForm"] as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -159,43 +140,5 @@ export default class RoleUpdate extends Vue {
       }
     });
   }
-
-  // checkPassword(rule: any, value: string, callback: Function) {
-  //   if (value.length < 6) {
-  //     callback(new Error("密码不能少于6位"));
-  //   } else {
-  //     callback();
-  //   }
-  // }
-  // async checkAccount(rule: any, value: string, callback: Function) {
-  //   const result = await this.$axios
-  //     .post("/api/admins/check-account", {
-  //       account: this.addFormObj.account,
-  //     })
-  //     .then((data: { data: object }) => data.data);
-  //   console.log(result);
-
-  //   if (value.length < 6) {
-  //     callback(new Error("账号不能少于5位"));
-  //   } else if (result.code != 1) {
-  //     callback(new Error(result.msg));
-  //   } else {
-  //     callback();
-  //   }
-  // }
-  // async checkEmail(rule: any, value: string, callback: Function) {
-  //   const result = await this.$axios
-  //     .post("/api/admins/check-email", {
-  //       email: this.addFormObj.email,
-  //     })
-  //     .then((data: { data: object }) => data.data);
-  //   console.log(result);
-
-  //   if (result.code != 1) {
-  //     callback(new Error(result.msg));
-  //   } else {
-  //     callback();
-  //   }
-  // }
 }
 </script>

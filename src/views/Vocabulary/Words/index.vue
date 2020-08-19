@@ -70,11 +70,21 @@ export default class Words extends Vue {
   }
 
   addTab(prop: prop) {
-    this.editableTabs.push({
-      title: "修改" + prop.spelling,
-      name: prop.spelling,
-      prop: prop,
-    });
+    let isMatched = false;
+    for (let i = 0; i < this.editableTabs.length; i++) {
+      if (this.editableTabs[i].name == prop.spelling) {
+        //已存在
+        isMatched = true;
+      }
+    }
+    if (!isMatched) {
+      this.editableTabs.push({
+        title: "修改" + prop.spelling,
+        name: prop.spelling,
+        prop: prop,
+      });
+    }
+
     this.activeName = prop.spelling;
   }
 

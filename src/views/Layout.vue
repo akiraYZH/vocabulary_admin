@@ -15,9 +15,6 @@
       @logout="logout"
     >
       <router-view slot="mainContent"></router-view>
-      <!-- <div slot="dialog" id="dialogContent">
-        <component :is="dialogContent" />
-      </div> -->
     </LayoutTemplate>
   </div>
 </template>
@@ -26,23 +23,15 @@
 import { Component, Provide, Vue } from "vue-property-decorator";
 import LayoutTemplate from "@/components/LayoutTemplate.vue";
 import store from "../store";
-// import about from "./About.vue"
-// const dialogContent:any="./Vocabulary/Words/index.vue";
 
 @Component({
   components: {
     LayoutTemplate: LayoutTemplate,
-    // dialogContent:()=>import(`${dialogContent}`)
   },
 })
 export default class Layout extends Vue {
-  // loginForm: { account: string; password: string };
-  // dialogContent:any;
   constructor() {
     super();
-    // this.routesForSidebar=[];
-    // this.routes=
-    // console.log(store.state);
   }
   get dialogContent() {
     return this.$store.state.layout.dialogContent;

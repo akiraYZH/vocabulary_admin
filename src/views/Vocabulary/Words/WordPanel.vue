@@ -16,6 +16,9 @@
       <el-form-item label="拼写(阴性)" prop="spelling_f">
         <el-input v-model="formObj.spelling_f"></el-input>
       </el-form-item>
+      <el-form-item label="主要含义" prop="primary_explaination">
+        <el-input v-model="formObj.primary_explaination"></el-input>
+      </el-form-item>
       <el-form-item label="音标" prop="phonetic">
         <el-input v-model="formObj.phonetic"></el-input> </el-form-item
       ><el-form-item label="难度" prop="difficulty">

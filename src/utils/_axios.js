@@ -7,7 +7,7 @@ axios.defaults.headers.post["Content-Type"] =
 axios.defaults.baseURL =
   process.env.NODE_ENV == "development"
     ? "http://127.0.0.1:7001/"
-    : "http://ycwback.0melon0.cn/";
+    : "http://francais-api.akirayu.cn";
 
 // 添加请求拦截器
 axios.interceptors.request.use(
@@ -36,7 +36,7 @@ axios.interceptors.response.use(
     // 保存token
     if (response.headers.authentication) {
       localStorage.setItem("authentication", response.headers.authentication);
-    } 
+    }
     return response;
   },
   function(error) {

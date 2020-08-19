@@ -26,7 +26,7 @@ export const asyncRoutes: Array<RouteConfig> = [
                 name: "Dashboard",
                 meta: { title: "Dashboard", icon: "el-icon-house" },
                 component: () =>
-                    import(/* webpackChunkName: "about" */ "../views/Dashboard/index.vue")
+                    import(/* webpackChunkName: "dashboard" */ "../views/Dashboard/index.vue")
 
             },
             {
