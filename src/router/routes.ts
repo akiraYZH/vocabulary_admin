@@ -30,6 +30,14 @@ export const asyncRoutes: Array<RouteConfig> = [
 
             },
             {
+                path: "/users",
+                name: "Users",
+                meta: { title: "Users", icon: "el-icon-user" },
+                component: () =>
+                    import(/* webpackChunkName: "about" */ "../views/Users/index.vue")
+
+            },
+            {
                 path: "/vocabulary",
                 name: "Vocabulary",
                 meta: { title: "Vocabulary", icon: "el-icon-folder" },
@@ -49,7 +57,7 @@ export const asyncRoutes: Array<RouteConfig> = [
             {
                 path: "/admins",
                 name: "Admins",
-                meta: { title: "Administrators", icon: "el-icon-house" },
+                meta: { title: "Administrators", icon: "el-icon-user" },
                 component: () =>
                     import(/* webpackChunkName: "about" */ "../views/Admins/index.vue")
 
@@ -57,7 +65,9 @@ export const asyncRoutes: Array<RouteConfig> = [
             {
                 path: "/roles",
                 name: "Roles",
-                meta: { title: "Roles", icon: "el-icon-house" },
+                meta: {
+                    title: "Roles", icon: "el-icon-connection"
+                },
                 component: () =>
                     import(/* webpackChunkName: "about" */ "../views/Roles/index.vue")
 

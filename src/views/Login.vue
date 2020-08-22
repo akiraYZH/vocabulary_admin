@@ -85,7 +85,7 @@ export default class Login extends Vue {
 
 <style lang="scss" scoped>
 .container {
-  background: rgb(189, 212, 255);
+  background: rgb(79, 85, 97);
   min-height: 100vh;
   .row {
     min-height: 100vh;
