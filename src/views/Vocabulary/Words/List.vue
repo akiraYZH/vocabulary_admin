@@ -6,25 +6,27 @@
         <el-button type="primary" class="searchBtn" @click="openAdd"
           >新增</el-button
         >
-        <el-input
-          v-model="input"
-          placeholder="请输入内容"
-          v-on:keyup.native.enter="
-            current = 1;
-            keyword = input;
-            getList();
-          "
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="
+        <div class="frame">
+          <el-input
+            v-model="input"
+            placeholder="请输入内容"
+            v-on:keyup.native.enter="
               current = 1;
               keyword = input;
               getList();
             "
-          ></el-button
-        ></el-input>
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="
+                current = 1;
+                keyword = input;
+                getList();
+              "
+            ></el-button
+          ></el-input>
+        </div>
       </div>
       <!-- top bar with add-btn and search-input  -->
       <!-- table -->
@@ -271,6 +273,9 @@ export default class WordList extends Vue {
     margin-bottom: 20px;
     .searchBtn {
       margin-right: 10px;
+    }
+    .frame {
+      width: 100%;
     }
   }
 

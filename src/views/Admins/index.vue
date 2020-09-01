@@ -3,28 +3,32 @@
     <template>
       <!-- top bar with add-btn and search-input  -->
       <div class="top-bar">
-        <el-button type="primary" class="searchBtn" @click="openAdd"
+        <el-button type="primary" class="addBtn" @click="openAdd"
           >新增</el-button
         >
-        <el-input
-          v-model="input"
-          placeholder="请输入内容"
-          v-on:keyup.native.enter="
-            current = 1;
-            keyword = input;
-            getList();
-          "
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="
+        <div class="frame">
+          <el-input
+            v-model="input"
+            class="searchBar"
+            placeholder="请输入内容"
+            v-on:keyup.native.enter="
               current = 1;
               keyword = input;
               getList();
             "
-          ></el-button
-        ></el-input>
+          >
+            <el-button
+              slot="append"
+              class="icon"
+              icon="el-icon-search"
+              @click="
+                current = 1;
+                keyword = input;
+                getList();
+              "
+            ></el-button
+          ></el-input>
+        </div>
       </div>
       <!-- top bar with add-btn and search-input  -->
       <!-- table -->
@@ -199,7 +203,10 @@ export default class Admins extends Vue {
   .top-bar {
     display: flex;
     margin-bottom: 20px;
-    .searchBtn {
+    .frame {
+      width: 100%;
+    }
+    .addBtn {
       margin-right: 10px;
     }
   }
