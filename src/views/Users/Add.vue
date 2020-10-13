@@ -8,14 +8,14 @@
       :rules="rules"
       ref="addForm"
     >
-      <el-form-item label="账号" prop="account">
-        <el-input v-model="addFormObj.account"></el-input>
-      </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="addFormObj.email"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input v-model="addFormObj.password"></el-input>
+      </el-form-item>
+      <el-form-item label="昵称" prop="nickname">
+        <el-input v-model="addFormObj.nickname"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" class="confirm-btn" @click="submit"
@@ -33,7 +33,7 @@ import { Component, Provide, Vue, Prop } from "vue-property-decorator";
 export default class UserAdd extends Vue {
   rules: object;
   addFormObj: {
-    account: string;
+    nickname: string;
     email: string;
     password: string;
   };
@@ -41,7 +41,7 @@ export default class UserAdd extends Vue {
   constructor() {
     super();
     this.rules = {
-      account: [{ validator: this.checkAccount, trigger: ["blur", "change"] }],
+      nickname: [{ validator: this.checkNick, trigger: ["blur", "change"] }],
       password: [
         { validator: this.checkPassword, trigger: ["blur", "change"] },
       ],
@@ -57,7 +57,7 @@ export default class UserAdd extends Vue {
     };
 
     this.addFormObj = {
-      account: "",
+      nickname: "",
       email: "",
       password: "",
     };
@@ -71,7 +71,7 @@ export default class UserAdd extends Vue {
       if (valid) {
         const result = await this.$axios
           .post("/api/users/add", {
-            account: this.addFormObj.account,
+            nickname: this.addFormObj.nickname,
             email: this.addFormObj.email,
             password: this.addFormObj.password,
           })
@@ -105,17 +105,15 @@ export default class UserAdd extends Vue {
       callback();
     }
   }
-  async checkAccount(rule: any, value: string, callback: Function) {
+  async checkNick(rule: any, value: string, callback: Function) {
     const result = await this.$axios
-      .post("/api/users/check-account", {
-        account: this.addFormObj.account,
+      .post("/api/users/check-nickname", {
+        nickname: this.addFormObj.nickname,
       })
       .then((data: { data: object }) => data.data);
     console.log(result);
 
-    if (value.length < 6) {
-      callback(new Error("账号不能少于5位"));
-    } else if (result.code != 1) {
+    if (result.code != 1) {
       callback(new Error(result.msg));
     } else {
       callback();

@@ -30,9 +30,9 @@
       </div>
       <!-- top bar with add-btn and search-input  -->
       <!-- table -->
-      <el-table :data="adminList" height="400" border style="width: 100%">
+      <el-table :data="usersList" height="400" border style="width: 100%">
         <el-table-column prop="id" label="ID" width="80"> </el-table-column>
-        <el-table-column prop="account" label="Account" width="100">
+        <el-table-column prop="nickname" label="Nickname" width="100">
         </el-table-column>
         <el-table-column prop="email" label="E-mail" width="180">
         </el-table-column>
@@ -88,7 +88,7 @@ import Add from "@/views/Users/Add.vue";
 
 @Component
 export default class Admins extends Vue {
-  adminList: [];
+  usersList: [];
   size: number;
   input: string;
   keyword: string;
@@ -97,7 +97,7 @@ export default class Admins extends Vue {
   updateObj: { id: number; account: string; password: string; role_id: number };
   constructor() {
     super();
-    this.adminList = [];
+    this.usersList = [];
     this.size = 0;
     this.input = "";
     this.keyword = "";
@@ -141,7 +141,7 @@ export default class Admins extends Vue {
     console.log(res);
 
     if (res.code == 1) {
-      this.adminList = res.data;
+      this.usersList = res.data;
       if (res.pagging) {
         this.size = res.pagging.total;
       } else {
