@@ -87,6 +87,7 @@ import { asyncRoutes } from "../../../router/routes";
 import { RouteConfig } from "vue-router";
 import TypesDropdown from "../../../components/TypesDropdown.vue";
 import DifficultyDropdown from "../../../components/DifficultyDropdown.vue";
+import trimObj from "../../../utils/trimObjString.js";
 
 @Component({
   components: {
@@ -140,7 +141,7 @@ export default class WordPanel extends Vue {
     super();
 
     if (this._mode == "update" && this.updateForm != undefined) {
-      this.formObj = this.updateForm;
+      this.formObj = JSON.parse(JSON.stringify(this.updateForm));
     } else {
       this.formObj = {
         /* eslint-disable */
@@ -178,6 +179,8 @@ export default class WordPanel extends Vue {
   async submit() {
     (this.$refs["addForm"] as any).validate(async (valid: boolean) => {
       if (valid) {
+        trimObj(this.formObj);
+
         let result = null;
         if (this.mode == "update") {
           result = await this.$axios

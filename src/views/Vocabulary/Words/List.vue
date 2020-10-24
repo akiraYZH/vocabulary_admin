@@ -135,6 +135,7 @@
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
 import uploadImg from "@/components/uploadImg.vue";
+
 // import Update from "./Update.vue";
 
 @Component({
@@ -182,18 +183,23 @@ export default class WordList extends Vue {
   }
 
   async getList() {
+    console.log(123);
+
     const res = await this.$axios
       .get("/api/words/get" + this.query)
       .then((data: any) => data.data);
-    console.log(res);
 
     if (res.code == 1) {
-      this.wordList = res.data;
+      this.wordList = res.data ? res.data : [];
+
       if (res.pagging) {
         this.size = res.pagging.total;
       } else {
         this.size = 0;
       }
+    } else if (res.code == 0) {
+      //没有数据
+      this.wordList = res.data ? res.data : [];
     }
     this.$emit("refreshed");
   }
@@ -244,23 +250,6 @@ export default class WordList extends Vue {
   uploadFail(res: any) {
     this.$message.error(res.msg);
   }
-  // handleRemove(file, fileList) {
-  //   console.log(file, fileList);
-  // }
-
-  // handlePreview(file) {
-  //   console.log(file);
-  // }
-  // handleExceed(files, fileList) {
-  //   this.$message.warning(
-  //     `当前限制选择 3 个文件，本次选择了 ${
-  //       files.length
-  //     } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-  //   );
-  // }
-  // beforeRemove(file, fileList) {
-  //   return this.$confirm(`确定移除 ${file.name}？`);
-  // }
 }
 </script>
 
