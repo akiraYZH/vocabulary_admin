@@ -7,7 +7,7 @@ axios.defaults.headers.post["Content-Type"] =
 axios.defaults.baseURL =
   process.env.NODE_ENV == "development"
     ? "http://127.0.0.1:7001/"
-    : "http://francais-api.akirayu.cn";
+    : "https://francais-api.akirayu.cn";
 
 // 添加请求拦截器
 axios.interceptors.request.use(
