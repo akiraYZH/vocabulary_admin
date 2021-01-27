@@ -33,7 +33,7 @@
           @change="formObj.primary_type_id = $event"
         ></TypesDropdown>
       </el-form-item>
-      <el-form-item label="Usage">
+      <el-form-item label="Use">
         <!-- Explaination -->
         <el-form
           label-position="left"
