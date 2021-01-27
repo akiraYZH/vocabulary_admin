@@ -7,10 +7,10 @@
       :model="updateFormObj"
       ref="addForm"
     >
-      <el-form-item label="角色名" prop="name">
+      <el-form-item label="Role name" prop="name">
         <el-input v-model="updateFormObj.name"></el-input>
       </el-form-item>
-      <el-form-item label="权限">
+      <el-form-item label="Permissions">
         <el-checkbox
           v-model="item.selected"
           v-for="item in permissionList"
@@ -20,7 +20,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" class="confirm-btn" @click="submit"
-          >提交</el-button
+          >Submit</el-button
         >
       </el-form-item>
     </el-form>
@@ -90,11 +90,8 @@ export default class RoleUpdate extends Vue {
       }
       const children = routes[i].children;
       if (children != undefined && children.length > 0) {
-        // console.log("enter");
-        // console.log(routes[i].children, permissionList);
         this.createPermissionList(children, permissionList);
       }
-      // console.log(permissionList, 123);
     }
     return permissionList;
   }
@@ -122,20 +119,20 @@ export default class RoleUpdate extends Vue {
 
         if (result.code == 1) {
           this.$notify({
-            title: "成功",
+            title: "Success",
             message: result.msg,
             type: "success",
           });
           this.$store.commit("layout/CLOSE_DIALOG");
         } else {
           this.$notify({
-            title: "失败",
+            title: "Failed",
             message: result.msg,
             type: "warning",
           });
         }
       } else {
-        this.$message.error("参数错误");
+        this.$message.error("Wrong params");
         return false;
       }
     });

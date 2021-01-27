@@ -7,34 +7,34 @@
       :model="formObj"
       ref="addForm"
     >
-      <el-form-item label="拼写" prop="spelling">
+      <el-form-item label="Spelling" prop="spelling">
         <el-input v-model="formObj.spelling"></el-input>
       </el-form-item>
-      <el-form-item label="拼写(阳性)" prop="spelling_m">
+      <el-form-item label="Spelling(Masculine)" prop="spelling_m">
         <el-input v-model="formObj.spelling_m"></el-input>
       </el-form-item>
-      <el-form-item label="拼写(阴性)" prop="spelling_f">
+      <el-form-item label="Spelling(Feminine)" prop="spelling_f">
         <el-input v-model="formObj.spelling_f"></el-input>
       </el-form-item>
-      <el-form-item label="主要含义" prop="primary_explaination">
+      <el-form-item label="Main explaination" prop="primary_explaination">
         <el-input v-model="formObj.primary_explaination"></el-input>
       </el-form-item>
-      <el-form-item label="音标" prop="phonetic">
+      <el-form-item label="Phonetic" prop="phonetic">
         <el-input v-model="formObj.phonetic"></el-input> </el-form-item
-      ><el-form-item label="难度" prop="difficulty">
+      ><el-form-item label="Difficulty" prop="difficulty">
         <DifficultyDropdown
           :chosen="formObj.difficulty"
           @change="formObj.difficulty = $event"
         ></DifficultyDropdown>
       </el-form-item>
-      <el-form-item label="词性" prop="primary_type_id">
+      <el-form-item label="Type" prop="primary_type_id">
         <TypesDropdown
           :chosen="formObj.primary_type_id"
           @change="formObj.primary_type_id = $event"
         ></TypesDropdown>
       </el-form-item>
-      <el-form-item label="用法">
-        <!-- 释义 -->
+      <el-form-item label="Usage">
+        <!-- Explaination -->
         <el-form
           label-position="left"
           label-width="80px"
@@ -46,35 +46,35 @@
             class="el-icon-error deleteBtn"
             @click="formObj.explainations.splice(index, 1)"
           ></i>
-          <el-form-item label="词性" prop="type_id" class="form-item">
+          <el-form-item label="Type" prop="type_id" class="form-item">
             <TypesDropdown
               :chosen="item.type_id"
               @change="item.type_id = $event"
             ></TypesDropdown>
           </el-form-item>
           <el-form-item
-            label="中文释义"
+            label="Explaination"
             prop="explaination_cn"
             class="form-item"
           >
             <el-input v-model="item.explaination_cn"></el-input>
           </el-form-item>
-          <el-form-item label="法语例句" prop="sentence_fr" class="form-item">
+          <el-form-item label="Example" prop="sentence_fr" class="form-item">
             <el-input v-model="item.sentence_fr"></el-input>
           </el-form-item>
-          <el-form-item label="例句释义" prop="sentence_cn" class="form-item">
+          <el-form-item label="Translation of example" prop="sentence_cn" class="form-item">
             <el-input v-model="item.sentence_cn"></el-input>
           </el-form-item>
-          <el-form-item label="排序" prop="sort" class="form-item">
+          <el-form-item label="Sort" prop="sort" class="form-item">
             <el-input v-model="item.sort" type="number" min="1"></el-input>
           </el-form-item>
         </el-form>
         <i class="el-icon-circle-plus addBtn" @click="addExplaination"></i>
-        <!-- 释义 -->
+        <!-- Explaination -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" class="confirm-btn" @click="submit"
-          >提交</el-button
+          >Submit</el-button
         >
       </el-form-item>
     </el-form>
@@ -194,7 +194,7 @@ export default class WordPanel extends Vue {
 
         if (result.code == 1) {
           this.$notify({
-            title: "成功",
+            title: "Success",
             message: result.msg,
             type: "success",
           });
@@ -202,13 +202,13 @@ export default class WordPanel extends Vue {
           this.$emit("needRefresh");
         } else {
           this.$notify({
-            title: "失败",
+            title: "Failed",
             message: result.msg,
             type: "warning",
           });
         }
       } else {
-        this.$message.error("参数错误");
+        this.$message.error("Wrong params");
         return false;
       }
     });

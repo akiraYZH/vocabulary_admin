@@ -39,7 +39,6 @@ export default class RolesDropdown extends Vue {
     this.roleList = result.data;
   }
   handleChange(roleId: Array<number>) {
-    console.log(roleId, 123);
     this.$emit("chooseRole", roleId[0]);
   }
 }

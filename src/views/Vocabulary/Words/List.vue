@@ -4,12 +4,12 @@
       <!-- top bar with add-btn and search-input  -->
       <div class="top-bar">
         <el-button type="primary" class="searchBtn" @click="openAdd"
-          >新增</el-button
+          >Add</el-button
         >
         <div class="frame">
           <el-input
             v-model="input"
-            placeholder="请输入内容"
+            placeholder="Please enter"
             v-on:keyup.native.enter="
               current = 1;
               keyword = input;
@@ -74,7 +74,7 @@
           </template>
         </el-table-column>
         <el-table-column label="Img" width="200">
-          <!-- 上传图片 -->
+          <!-- upload images -->
           <template slot-scope="scope">
             <uploadImg
               :urlTemp="scope.row.image"
@@ -88,7 +88,7 @@
               "
               @uploadFail="uploadFail($event)"
             ></uploadImg>
-            <!-- 上传图片 -->
+            <!-- upload images -->
           </template>
         </el-table-column>
         <el-table-column label="Controls">
@@ -99,10 +99,10 @@
                 size="mini"
                 class="btn"
                 @click="openUpdate(scope.row)"
-                >修改</el-button
+                >Update</el-button
               >
               <el-popconfirm
-                title="确定删除吗？"
+                title="Confirm?"
                 @onConfirm="delThis(scope.row)"
               >
                 <el-button
@@ -110,7 +110,7 @@
                   size="mini"
                   class="btn"
                   slot="reference"
-                  >删除</el-button
+                  >Delete</el-button
                 >
               </el-popconfirm>
             </div>
@@ -183,8 +183,6 @@ export default class WordList extends Vue {
   }
 
   async getList() {
-    console.log(123);
-
     const res = await this.$axios
       .get("/api/words/get" + this.query)
       .then((data: any) => data.data);
@@ -198,7 +196,7 @@ export default class WordList extends Vue {
         this.size = 0;
       }
     } else if (res.code == 0) {
-      //没有数据
+      // no data
       this.wordList = res.data ? res.data : [];
     }
     this.$emit("refreshed");

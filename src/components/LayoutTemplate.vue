@@ -73,7 +73,7 @@
               </el-menu>
             </div>
           </el-drawer>
-          <!-- 移动菜单 -->
+          <!-- mobile menu -->
 
           <el-aside width="200px" class="aside" :style="`background:` + sideBg">
             <el-menu

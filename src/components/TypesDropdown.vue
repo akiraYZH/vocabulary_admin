@@ -27,8 +27,6 @@ export default class TypesDropdown extends Vue {
     } else {
       this.chosenId = null;
     }
-
-    // this.chosenId = 1;
   }
 
   async created() {
@@ -42,12 +40,10 @@ export default class TypesDropdown extends Vue {
 
   @Watch("chosenId")
   emitChange(newVal: number, oldVal: number) {
-    // this.addFormObj.permissions = newVal;
     this.$emit("change", newVal);
   }
 
   handleChange(roleId: Array<number>) {
-    console.log(roleId, 123);
     this.$emit("chooseRole", roleId[0]);
   }
 }

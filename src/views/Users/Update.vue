@@ -8,15 +8,15 @@
       :rules="rules"
       ref="addForm"
     >
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="E-mail" prop="email">
         <el-input v-model="updateFormObj.email"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="Password" prop="password">
         <el-input v-model="updateFormObj.password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" class="confirm-btn" @click="submit"
-          >提交</el-button
+          >Submit</el-button
         >
       </el-form-item>
     </el-form>
@@ -50,10 +50,10 @@ export default class UserUpdate extends Vue {
         { validator: this.checkPassword, trigger: ["blur", "change"] },
       ],
       email: [
-        { required: true, message: "请输入邮箱地址", trigger: "blur" },
+        { required: true, message: "Please enter e-mail address.", trigger: "blur" },
         {
           type: "email",
-          message: "请输入正确的邮箱地址",
+          message: "Please enter e-mail with right format",
           trigger: ["blur", "change"],
         },
         { validator: this.checkEmail, trigger: ["blur", "change"] },
@@ -84,20 +84,20 @@ export default class UserUpdate extends Vue {
 
         if (result.code == 1) {
           this.$notify({
-            title: "成功",
+            title: "Success",
             message: result.msg,
             type: "success",
           });
           this.$store.commit("layout/CLOSE_DIALOG");
         } else {
           this.$notify({
-            title: "失败",
+            title: "Failed",
             message: result.msg,
             type: "warning",
           });
         }
       } else {
-        this.$message.error("参数错误");
+        this.$message.error("Wrong params");
         return false;
       }
     });
@@ -105,7 +105,7 @@ export default class UserUpdate extends Vue {
 
   checkPassword(rule: any, value: string, callback: Function) {
     if (value.length < 6) {
-      callback(new Error("密码不能少于6位"));
+      callback(new Error("Password length not less than 6 letters"));
     } else {
       callback();
     }

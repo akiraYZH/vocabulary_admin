@@ -2,18 +2,18 @@
  * @param {二进制文件流} file
  */
 function changeFileToBaseURL(file) {
-  // 创建读取文件对象
+  // Create file
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    //如果file没定义返回null
+    //file is not defined, return null
     if (file == undefined) {
       reject();
     }
-    // 读取file文件,得到的结果为base64位
+    // read file, convert to format base64
     fileReader.readAsDataURL(file);
 
     fileReader.onload = function() {
-      // 把读取到的base64
+      // return loaded base64
       const imgBase64Data = this.result;
       resolve(imgBase64Data);
     };
@@ -21,10 +21,10 @@ function changeFileToBaseURL(file) {
 }
 
 /**
- * 将base64转换为文件
+ * convert base64 to file format
  * @param {baseURL} dataurl
- * @param {文件名称} filename
- * @return {文件二进制流}
+ * @param {file name} filename
+ * @return {Binary stream}
  */
 function dataURLtoFile(dataurl, filename) {
   const arr = dataurl.split(","),
@@ -39,72 +39,68 @@ function dataURLtoFile(dataurl, filename) {
 }
 
 /**
- * canvas压缩图片
- * @param {参数obj} param
- * @param {文件二进制流} param.file 必传
- * @param {目标压缩大小} param.targetSize 不传初始赋值-1
- * @param {输出图片宽度} param.width 不传初始赋值-1，等比缩放不用传高度
- * @param {输出图片名称} param.fileName 不传初始赋值image
- * @param {压缩图片程度} param.quality 不传初始赋值0.92。值范围0~1
+ * canvas compress img
+ * @param {params obj} param
+ * @param {file binary stream} param.file required
+ * @param {target size} param.targetSize default -1
+ * @param {image width} param.width default -1，auto set height by ratio
+ * @param {output name} param.fileName default "image"
+ * @param {compress quality} param.quality default 0.92.range 0~1
  */
 async function pressImg(param) {
   return new Promise((resolve, reject) => {
-    //如果没有回调函数就不执行
+    //if there is no cb then return
     if (param) {
-      //如果file没定义就reject
+      //if file is not defined, reject
       if (param.file == undefined) {
         reject();
       }
-      //给参数附初始值
+      //assign default values
       param.targetSize = param.hasOwnProperty["targetSize"]
         ? param.targetSize
         : -1;
       param.width = param["width"] ? param.width : -1;
       param.fileName = param["fileName"] ? param.fileName : "image";
       param.quality = param["quality"] ? param.quality : 0.92;
-      // 得到文件类型
+      // get file type
       const fileType = param.file.type;
-      // console.log(fileType) //image/jpeg
       if (fileType.indexOf("image") == -1) {
-        console.log("请选择图片文件^_^");
+        console.log("Please select image file^_^");
         reject();
       }
-      //如果当前size比目标size小，直接输出
+      //If current size is smaller than target size，return it directly
       const size = param.file.size;
       if (param.targetSize > size) {
-        //   return param.succ(param.file);
         return param.file;
       }
-      // 读取file文件,得到的结果为base64位
+      // read file, base64
       changeFileToBaseURL(param.file).then((base64) => {
         if (base64) {
           const image = new Image();
           image.src = base64;
           image.onload = function() {
-            // 获得长宽比例
+            // get width/height ratio
             const scale = this.width / this.height;
-            // console.log(scale);
-            //创建一个canvas
+            //create a canvas tag
             const canvas = document.createElement("canvas");
-            //获取上下文
+            //get context
             const context = canvas.getContext("2d");
-            //获取压缩后的图片宽度,如果width为-1，默认原图宽度
+            //get target width, if width is -1, width is original width
             canvas.width = param.width == -1 ? this.width : param.width;
-            //获取压缩后的图片高度,如果width为-1，默认原图高度
+            //get target height, if width is -1, height is original height
             canvas.height =
               param.width == -1 ? this.height : parseInt(param.width / scale);
-            //把图片绘制到canvas上面
+            //render image $(selector).toggle(); canvas
             context.drawImage(image, 0, 0, canvas.width, canvas.height);
-            //压缩图片，获取到新的base64Url
+            //compress img, get new base64Url
             const newImageData = canvas.toDataURL(fileType, param.quality);
-            //将base64转化成文件流
+            // convert base64 to file data
             const resultFile = dataURLtoFile(newImageData, param.fileName);
-            //判断如果targetSize有限制且压缩后的图片大小比目标大小大，就弹出reject
+            //if targetSize is set and is smaller than the actual result size, reject
             if (param.targetSize != -1 && param.targetSize < resultFile.size) {
-              console.log("图片上传尺寸太大，请重新上传^_^");
+              console.log("Image file too large, please select another file^_^");
               reject();
             } else {
-              //返回文件流
               resolve(resultFile);
             }
           };

@@ -8,16 +8,16 @@
       :rules="rules"
       ref="addForm"
     >
-      <el-form-item label="账号" prop="account">
+      <el-form-item label="Account" prop="account">
         <el-input v-model="addFormObj.account"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="E-mail" prop="email">
         <el-input v-model="addFormObj.email"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="Passord" prop="password">
         <el-input v-model="addFormObj.password"></el-input>
       </el-form-item>
-      <el-form-item label="角色">
+      <el-form-item label="Role">
         <RolesDropdown
           :chosen="addFormObj.roleId"
           @chooseRole="chooseRole($event)"
@@ -25,7 +25,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" class="confirm-btn" @click="submit"
-          >提交</el-button
+          >Submit</el-button
         >
       </el-form-item>
     </el-form>
@@ -61,7 +61,7 @@ export default class AdminAdd extends Vue {
         { required: true, message: "请输入邮箱地址", trigger: "blur" },
         {
           type: "email",
-          message: "请输入正确的邮箱地址",
+          message: "Please enter email with right format",
           trigger: ["blur", "change"],
         },
         { validator: this.checkEmail, trigger: ["blur", "change"] },
@@ -80,9 +80,6 @@ export default class AdminAdd extends Vue {
     this.addFormObj.roleId = String(roleId);
   }
 
-  // get updateFormObj() {
-
-  // }
   async submit() {
     (this.$refs["addForm"] as any).validate(async (valid: boolean) => {
       if (valid) {
@@ -98,20 +95,20 @@ export default class AdminAdd extends Vue {
 
         if (result.code == 1) {
           this.$notify({
-            title: "成功",
+            title: "Success",
             message: result.msg,
             type: "success",
           });
           this.$store.commit("layout/CLOSE_DIALOG");
         } else {
           this.$notify({
-            title: "失败",
+            title: "Failed",
             message: result.msg,
             type: "warning",
           });
         }
       } else {
-        this.$message.error("参数错误");
+        this.$message.error("Wrong params");
         return false;
       }
     });
@@ -119,7 +116,7 @@ export default class AdminAdd extends Vue {
 
   checkPassword(rule: any, value: string, callback: Function) {
     if (value.length < 6) {
-      callback(new Error("密码不能少于6位"));
+      callback(new Error("Password length not less than 6 letters"));
     } else {
       callback();
     }
@@ -133,7 +130,7 @@ export default class AdminAdd extends Vue {
     console.log(result);
 
     if (value.length < 6) {
-      callback(new Error("账号不能少于5位"));
+      callback(new Error("Password length less than 6 letters"));
     } else if (result.code != 1) {
       callback(new Error(result.msg));
     } else {

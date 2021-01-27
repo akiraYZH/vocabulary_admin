@@ -4,7 +4,7 @@
       <!-- top bar with add-btn and search-input  -->
       <div class="top-bar">
         <el-button type="primary" class="searchBtn" @click="openAdd"
-          >新增</el-button
+          >Add</el-button
         >
       </div>
       <!-- top bar with add-btn and search-input  -->
@@ -34,10 +34,10 @@
                 size="mini"
                 class="btn"
                 @click="openUpdate(scope.row)"
-                >修改</el-button
+                >Update</el-button
               >
               <el-popconfirm
-                title="确定删除吗？"
+                title="Confirm?"
                 @onConfirm="delThis(scope.row)"
               >
                 <el-button
@@ -45,7 +45,7 @@
                   size="mini"
                   class="btn"
                   slot="reference"
-                  >删除</el-button
+                  >Delete</el-button
                 >
               </el-popconfirm>
             </div>
@@ -58,11 +58,9 @@
 </template>
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
-// import AdminUpdate from "@/components/AdminUpdate.vue";
 import Add from "@/views/Roles/Add.vue";
 import Update from "@/views/Roles/Update.vue";
 
-// import update from "./update";
 
 @Component
 export default class Roles extends Vue {

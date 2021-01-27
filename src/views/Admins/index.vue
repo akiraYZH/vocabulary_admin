@@ -4,13 +4,13 @@
       <!-- top bar with add-btn and search-input  -->
       <div class="top-bar">
         <el-button type="primary" class="addBtn" @click="openAdd"
-          >新增</el-button
+          >Add</el-button
         >
         <div class="frame">
           <el-input
             v-model="input"
             class="searchBar"
-            placeholder="请输入内容"
+            placeholder="Please enter"
             v-on:keyup.native.enter="
               current = 1;
               keyword = input;
@@ -48,10 +48,10 @@
                 size="mini"
                 class="btn"
                 @click="openUpdate(scope.row)"
-                >修改</el-button
+                >Update</el-button
               >
               <el-popconfirm
-                title="确定删除吗？"
+                title="Confirm?"
                 @onConfirm="delThis(scope.row)"
               >
                 <el-button
@@ -59,7 +59,7 @@
                   size="mini"
                   class="btn"
                   slot="reference"
-                  >删除</el-button
+                  >Delete</el-button
                 >
               </el-popconfirm>
             </div>

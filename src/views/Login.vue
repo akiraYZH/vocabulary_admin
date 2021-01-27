@@ -7,7 +7,7 @@
           label-width="100px"
           class="demo-dynamic form"
         >
-          <h2 class="title">单词管理系统</h2>
+          <h2 class="title">Vacabulary Management System(Demo)</h2>
           <el-form-item
             prop="account"
             label="Account"

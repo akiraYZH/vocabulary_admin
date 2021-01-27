@@ -1,13 +1,13 @@
 <template>
   <el-tabs v-model="activeName" type="border-card" @tab-remove="removeTab">
-    <el-tab-pane label="Words List 单词列表" name="words" :closable="false"
+    <el-tab-pane label="Words List" name="words" :closable="false"
       ><List
         @toAdd="toAdd"
         @newUpdate="addTab($event)"
         :needRefresh="needRefresh"
         @refreshed="needRefresh = false"
     /></el-tab-pane>
-    <el-tab-pane label="Add New Word 新增单词" name="add"
+    <el-tab-pane label="Add New Word" name="add"
       ><WordPanel mode="add" @needRefresh="needRefresh = true"
     /></el-tab-pane>
     <el-tab-pane
@@ -73,13 +73,13 @@ export default class Words extends Vue {
     let isMatched = false;
     for (let i = 0; i < this.editableTabs.length; i++) {
       if (this.editableTabs[i].name == prop.spelling) {
-        //已存在
+        //existed
         isMatched = true;
       }
     }
     if (!isMatched) {
       this.editableTabs.push({
-        title: "修改" + prop.spelling,
+        title: "Modify " + prop.spelling,
         name: prop.spelling,
         prop: prop,
       });

@@ -2,7 +2,7 @@
   <div>
     <LayoutTemplate
       :routesForSidebar="routesForSidebar"
-      title="单词管理系统"
+      title="Vacabulary Management System(Demo)"
       sideBgColor="#545c64"
       sideTextColor="white"
       sideActiveColor="orange"

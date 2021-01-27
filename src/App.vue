@@ -10,12 +10,9 @@ import { mapActions } from "vuex"; // 注意是mapActions
 @Component
 export default class App extends Vue {
   async created() {
-    // let result: object={};
     if (localStorage.getItem("authentication")) {
       this.$store.dispatch("admin/loginToken");
     }
-
-    // console.log(result);
   }
 }
 </script>

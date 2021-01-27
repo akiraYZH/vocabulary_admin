@@ -1,6 +1,6 @@
 <template>
   <el-tabs v-model="activeName" type="border-card" @tab-remove="removeTab">
-    <el-tab-pane label="Books List 单词书列表" name="books" :closable="false"
+    <el-tab-pane label="Books List" name="books" :closable="false"
       ><List
         @newUpdate="addTab($event)"
         :needRefresh="needRefresh"
@@ -23,7 +23,6 @@
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
 import List from "./List.vue";
-// import WordPanel from "@/views/Vocabulary/Words/WordPanel.vue";
 import WordsDistribution from "@/views/Vocabulary/Books/WordsDistribution.vue";
 interface Input {
   id: number | undefined;
@@ -38,7 +37,6 @@ interface Input {
 })
 export default class Words extends Vue {
   activeName: string;
-  // editableTabsValue: string;
   editableTabs: Array<{ title: string; name: string; prop: Input }>;
   needRefresh: boolean;
   constructor() {
@@ -52,13 +50,13 @@ export default class Words extends Vue {
     let isMatched = false;
     for (let i = 0; i < this.editableTabs.length; i++) {
       if (this.editableTabs[i].name == prop.title) {
-        //已存在
+        // existed
         isMatched = true;
       }
     }
     if (!isMatched) {
       this.editableTabs.push({
-        title: "修改" + prop.title,
+        title: "Modify " + prop.title,
         name: prop.title,
         prop: prop,
       });
@@ -72,7 +70,7 @@ export default class Words extends Vue {
 
     if (activeName === targetName) {
       if (tabs.length > 1) {
-        // 如果只有一个不固定的tab
+        // only one tab
         tabs.forEach((tab, index) => {
           if (tab.name === targetName) {
             const nextTab = tabs[index + 1] || tabs[index - 1];
@@ -82,7 +80,7 @@ export default class Words extends Vue {
           }
         });
       } else {
-        // 删掉最后一个不固定tab, 跳回单词列表
+        // delete last tab, go back to books tab
         activeName = "books";
       }
     }

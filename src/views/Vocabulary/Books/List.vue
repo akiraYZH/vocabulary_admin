@@ -4,7 +4,7 @@
       <!-- top bar with add-btn -->
       <div class="top-bar">
         <el-button type="primary" class="searchBtn" @click="openAdd"
-          >新增</el-button
+          >Add</el-button
         >
       </div>
       <!-- top bar with add-btn  -->
@@ -29,7 +29,7 @@
                   <div @click.stop="">
                     <el-input
                       v-model="updateList[scope.$index].title"
-                      placeholder="请输入内容"
+                      placeholder="Please enter"
                       class="input"
                       :autofocus="true"
                     ></el-input>
@@ -57,10 +57,10 @@
                 size="mini"
                 class="btn"
                 @click="openModifyWords(scope.row)"
-                >修改</el-button
+                >Update</el-button
               >
               <el-popconfirm
-                title="确定删除吗？"
+                title="Confirm?"
                 @onConfirm="delThis(scope.row)"
               >
                 <el-button
@@ -68,7 +68,7 @@
                   size="mini"
                   class="btn"
                   slot="reference"
-                  >删除</el-button
+                  >Delete</el-button
                 >
               </el-popconfirm>
             </div>

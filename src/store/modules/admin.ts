@@ -8,7 +8,7 @@ type state = {
   routesForSidebar: []
 }
 const state: state = {
-  //管理者信息
+  //admin info
   adminInfo: {},
   routesForSidebar: []
 
