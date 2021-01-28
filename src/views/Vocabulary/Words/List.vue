@@ -125,7 +125,7 @@
         :total="size"
         @current-change="turnPage"
         class="pagination"
-        :current-page="current"
+        :current-page.sync="_current"
       >
       </el-pagination>
       <!-- pagination -->
@@ -150,6 +150,7 @@ export default class WordList extends Vue {
   input: string;
   keyword: string;
   current: number;
+  _current: number;
 
   constructor() {
     super();
@@ -158,6 +159,7 @@ export default class WordList extends Vue {
     this.input = "";
     this.keyword = "";
     this.current = 1;
+    this._current = 1;
   }
   turnPage(current: number) {
     this.current = current;
@@ -189,7 +191,7 @@ export default class WordList extends Vue {
 
     if (res.code == 1) {
       this.wordList = res.data ? res.data : [];
-
+      this._current = this.current;
       if (res.pagging) {
         this.size = res.pagging.total;
       } else {

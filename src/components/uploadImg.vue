@@ -26,7 +26,7 @@ export default {
       uploadApi:
         process.env.NODE_ENV == "development"
           ? "http://127.0.0.1:7001/api/words/upload-img"
-          : "https://francais-api.akirayu.cn/api/words/upload-img",
+          : "https://francais-api.akirayu.space/api/words/upload-img",
       //  uploadApi: "http://localhost:8000/api/img/uploadImg",
       header: {
         authentication: "bearer " + localStorage.getItem("authentication"),

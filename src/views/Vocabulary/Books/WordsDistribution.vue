@@ -6,9 +6,10 @@
         <el-transfer
           style="text-align:left"
           class="el-transfer"
+          :titles="['Words', updateFormObj.title ]"
           filterable
           :filter-method="filterMethod"
-          filter-placeholder="请输入单词字母"
+          filter-placeholder="Please enter word."
           v-model="selectedWords"
           :data="words"
           :props="{
@@ -91,7 +92,7 @@ export default class WordsDistribution extends Vue {
 
     if (result.code == 1) {
       this.$notify({
-        title: "成功",
+        title: "Success",
         message: result.msg,
         type: "success",
       });
@@ -99,7 +100,7 @@ export default class WordsDistribution extends Vue {
       this.getList();
     } else {
       this.$notify({
-        title: "失败",
+        title: "Failed",
         message: result.msg,
         type: "warning",
       });
